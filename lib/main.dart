@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'Questions.dart';
 
 void main() {
   runApp(QuizApp());
@@ -27,15 +28,13 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-  List<Icon> checkAnswers = [
-    Icon(
-      Icons.check,
-      color: Colors.green,
-    ),
-    Icon(
-      Icons.close,
-      color: Colors.red,
-    ),
+  List<Icon> checkAnswers = [];
+  int questionNumber = 0;
+
+  List<Questions> questionsList = [
+    Questions(q: 'First Question', a: true),
+    Questions(q: 'Second Question', a: false),
+    Questions(q: 'Third Question', a: true),
   ];
 
   @override
@@ -50,7 +49,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                'This is where the question text will go.',
+                questionsList[questionNumber].question,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -73,7 +72,22 @@ class _QuizPageState extends State<QuizPage> {
                   fontSize: 20.0,
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                setState(() {
+                  if (questionsList[questionNumber].answer == true) {
+                    checkAnswers.add(Icon(
+                      Icons.check,
+                      color: Colors.green,
+                    ));
+                  } else {
+                    checkAnswers.add(Icon(
+                      Icons.close,
+                      color: Colors.red,
+                    ));
+                  }
+                  questionNumber++;
+                });
+              },
             ),
           ),
         ),
@@ -90,6 +104,20 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
+                setState(() {
+                  if (questionsList[questionNumber].answer == false) {
+                    checkAnswers.add(Icon(
+                      Icons.check,
+                      color: Colors.green,
+                    ));
+                  } else {
+                    checkAnswers.add(Icon(
+                      Icons.close,
+                      color: Colors.red,
+                    ));
+                  }
+                  questionNumber++;
+                });
                 //The user picked false.
               },
             ),
