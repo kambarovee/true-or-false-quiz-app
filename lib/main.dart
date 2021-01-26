@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'Questions.dart';
+import 'quiz.dart';
 
 void main() {
   runApp(QuizApp());
 }
+
+Quiz quiz = Quiz();
 
 class QuizApp extends StatelessWidget {
   @override
@@ -28,14 +30,29 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-  List<Icon> checkAnswers = [];
-  int questionNumber = 0;
+  List<Icon> scoreList = [];
 
-  List<Questions> questionsList = [
-    Questions(q: 'First Question', a: true),
-    Questions(q: 'Second Question', a: false),
-    Questions(q: 'Third Question', a: true),
-  ];
+  void checkAnswers(bool usersChoice) {
+    bool correctAnswer = quiz.getAnswer();
+    setState(() {
+      if (usersChoice == correctAnswer) {
+        scoreList.add(
+          Icon(
+            Icons.check,
+            color: Colors.green,
+          ),
+        );
+      } else {
+        scoreList.add(
+          Icon(
+            Icons.close,
+            color: Colors.red,
+          ),
+        );
+      }
+      quiz.nextQuestionNum();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +66,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                questionsList[questionNumber].question,
+                quiz.getQuestion(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -73,20 +90,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                setState(() {
-                  if (questionsList[questionNumber].answer == true) {
-                    checkAnswers.add(Icon(
-                      Icons.check,
-                      color: Colors.green,
-                    ));
-                  } else {
-                    checkAnswers.add(Icon(
-                      Icons.close,
-                      color: Colors.red,
-                    ));
-                  }
-                  questionNumber++;
-                });
+                checkAnswers(true);
               },
             ),
           ),
@@ -104,27 +108,13 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                setState(() {
-                  if (questionsList[questionNumber].answer == false) {
-                    checkAnswers.add(Icon(
-                      Icons.check,
-                      color: Colors.green,
-                    ));
-                  } else {
-                    checkAnswers.add(Icon(
-                      Icons.close,
-                      color: Colors.red,
-                    ));
-                  }
-                  questionNumber++;
-                });
-                //The user picked false.
+                checkAnswers(false);
               },
             ),
           ),
         ),
         Row(
-          children: checkAnswers,
+          children: scoreList,
         ),
       ],
     );
