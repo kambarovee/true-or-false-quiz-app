@@ -35,22 +35,24 @@ class _QuizPageState extends State<QuizPage> {
   void checkAnswers(bool usersChoice) {
     bool correctAnswer = quiz.getAnswer();
     setState(() {
-      if (usersChoice == correctAnswer) {
-        scoreList.add(
-          Icon(
-            Icons.check,
-            color: Colors.green,
-          ),
-        );
-      } else {
-        scoreList.add(
-          Icon(
-            Icons.close,
-            color: Colors.red,
-          ),
-        );
+      if (quiz.maxQuestionNum() != scoreList.length) {
+        if (usersChoice == correctAnswer) {
+          scoreList.add(
+            Icon(
+              Icons.check,
+              color: Colors.green,
+            ),
+          );
+        } else {
+          scoreList.add(
+            Icon(
+              Icons.close,
+              color: Colors.red,
+            ),
+          );
+        }
+        quiz.nextQuestionNum();
       }
-      quiz.nextQuestionNum();
     });
   }
 

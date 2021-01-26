@@ -21,4 +21,8 @@ class Quiz {
   bool getAnswer() {
     return _questionsList[_questionNumber].answer;
   }
+
+  int maxQuestionNum() {
+    return _questionsList.length;
+  }
 }
