@@ -31,4 +31,8 @@ class Quiz {
       return true;
     }
   }
+
+  int reset() {
+    return _questionNumber = 0;
+  }
 }

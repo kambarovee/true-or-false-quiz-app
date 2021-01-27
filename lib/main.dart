@@ -37,7 +37,20 @@ class _QuizPageState extends State<QuizPage> {
     bool correctAnswer = quiz.getAnswer();
     setState(() {
       if (quiz.maxQuestionNum() == scoreList.length) {
-        Alert(context: context, title: 'Hello!', desc: 'Flutter is awesome!').show();
+        Alert(
+          context: context,
+          title: 'Congratulation!',
+          desc: 'You done this quiz!',
+          buttons: [
+            DialogButton(
+              child: Text('Reset'),
+              onPressed: () {
+                quiz.reset();
+                scoreList.clear();
+              },
+            ),
+          ],
+        ).show();
       }
 
       if (quiz.maxQuestionNum() != scoreList.length) {
