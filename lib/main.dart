@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'quiz.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 void main() {
   runApp(QuizApp());
@@ -35,6 +36,10 @@ class _QuizPageState extends State<QuizPage> {
   void checkAnswers(bool usersChoice) {
     bool correctAnswer = quiz.getAnswer();
     setState(() {
+      if (quiz.maxQuestionNum() == scoreList.length) {
+        Alert(context: context, title: 'Hello!', desc: 'Flutter is awesome!').show();
+      }
+
       if (quiz.maxQuestionNum() != scoreList.length) {
         if (usersChoice == correctAnswer) {
           scoreList.add(

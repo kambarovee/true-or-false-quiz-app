@@ -25,4 +25,10 @@ class Quiz {
   int maxQuestionNum() {
     return _questionsList.length;
   }
+
+  bool isFinished() {
+    if (_questionNumber == _questionsList.length - 1) {
+      return true;
+    }
+  }
 }
